@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 
 interface Student {
   id: number
@@ -8,28 +8,34 @@ interface Student {
 }
 
 function useStudents() {
+  const [students, setStudents] = useState<Student[]>(() => {
+    const savedStudents = localStorage.getItem('students')
 
-  const [students, setStudents] = useState<Student[]>([
-    {
-      id: 1,
-      title: 'Sakshi Deshmukh',
-      email: 'sakshi@gmail.com',
-      branch: 'CSE'
-    },
-    {
-      id: 2,
-      title: 'Rahul Patil',
-      email: 'rahul@gmail.com',
-      branch: 'IT'
+    if (savedStudents) {
+      return JSON.parse(savedStudents)
     }
-  ])
 
-  function addStudent(
-    name: string,
-    email: string,
-    branch: string
-  ) {
+    return [
+      {
+        id: 1,
+        title: 'Sakshi Deshmukh',
+        email: 'sakshi@gmail.com',
+        branch: 'CSE'
+      },
+      {
+        id: 2,
+        title: 'Rahul Patil',
+        email: 'rahul@gmail.com',
+        branch: 'IT'
+      }
+    ]
+  })
 
+  useEffect(() => {
+    localStorage.setItem('students', JSON.stringify(students))
+  }, [students])
+
+  function addStudent(name: string, email: string, branch: string) {
     const newStudent: Student = {
       id: Date.now(),
       title: name,
@@ -46,7 +52,6 @@ function useStudents() {
     email: string,
     branch: string
   ) {
-
     const updatedStudents = students.map(student =>
       student.id === id
         ? {
@@ -62,7 +67,6 @@ function useStudents() {
   }
 
   function deleteStudent(id: number) {
-
     const updatedStudents = students.filter(
       student => student.id !== id
     )

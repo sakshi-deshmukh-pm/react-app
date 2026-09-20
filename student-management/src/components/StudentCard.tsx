@@ -1,3 +1,5 @@
+import Button from "@mui/material/Button"
+
 interface StudentCardProp {
   title: string
   email: string
@@ -25,19 +27,25 @@ function StudentCard({
 
       <div className="student-buttons">
 
-        <button
-          className="edit-button"
+        <Button
+          variant="contained"
+          color="primary"
           onClick={onEdit}
+          sx={{ textTransform: 'none' ,
+            marginRight:'10px'
+          }}
         >
           Edit
-        </button>
+        </Button>
 
-        <button
-          className="delete-button"
+        <Button
+          variant="contained"
+          color="error"
           onClick={onDelete}
+          sx={{ textTransform: 'none' }}
         >
           Delete
-        </button>
+        </Button>
 
       </div>
 

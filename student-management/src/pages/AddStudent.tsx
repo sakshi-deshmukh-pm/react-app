@@ -1,3 +1,5 @@
+import Button from '@mui/material/Button'
+
 import {
   useState,
   useEffect
@@ -147,16 +149,14 @@ function AddStudent() {
               e => setBranch(e.target.value)
             }
           />
+          <Button
+            type="submit"
+            variant="contained"
+            color="primary">
+            {editId ? 'Update Student' : 'Add Student'}
+          </Button>
 
 
-          <button type="submit">
-
-            {editId
-              ? 'Update Student'
-              : 'Add Student'
-            }
-
-          </button>
 
         </form>
 

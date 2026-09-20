@@ -139,7 +139,7 @@ body {
   outline: none;
   border-color: #2563eb;
 }
-
+/* 
 .student-form button {
   padding: 12px 20px;
   border: none;
@@ -148,7 +148,7 @@ body {
   color: white;
   cursor: pointer;
   font-size: 14px;
-}
+} */
 
 .student-form button:hover {
   opacity: 0.9;
