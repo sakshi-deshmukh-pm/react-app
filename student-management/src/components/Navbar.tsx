@@ -1,5 +1,15 @@
 import { Link } from 'react-router-dom'
 
+import AppBar from './ui/AppBar'
+import Toolbar from './ui/Toolbar'
+import Typography from '../components/ui/Typography'
+import Button from '../components/ui/Button'
+import Box from '../components/ui/Box'
+
+import DashboardIcon from '@mui/icons-material/Dashboard'
+import SchoolIcon from '@mui/icons-material/School'
+import PersonAddIcon from '@mui/icons-material/PersonAdd'
+
 interface NavbarProps {
   title: string
 }
@@ -7,27 +17,123 @@ interface NavbarProps {
 function Navbar({ title }: NavbarProps) {
 
   return (
-    <nav className="navbar">
+    <AppBar
+      position="static"
+      elevation={0}
+      sx={{
+        backgroundColor: '#ffffff',
+        color: '#1f2937',
+        borderBottom: '1px solid #e5e7eb'
+      }}
+    >
 
-      <h2>{title}</h2>
+      <Toolbar
+        sx={{
+          minHeight: '72px',
+          px: { xs: 2, md: 5 }
+        }}
+      >
 
-      <div className="nav-links">
+        {/* Logo / Title */}
+        <Box
+          sx={{
+            display: 'flex',
+            alignItems: 'center',
+            gap: 1.5,
+            flexGrow: 1
+          }}
+        >
 
-        <Link to="/">
-          Dashboard
-        </Link>
+          <SchoolIcon
+            sx={{
+              fontSize: 34,
+              color: '#2563eb'
+            }}
+          />
 
-        <Link to="/students">
-          Students
-        </Link>
+          <Typography
+            variant="h6"
+            sx={{
+              fontWeight: 700,
+              letterSpacing: '0.3px'
+            }}
+          >
+            {title}
+          </Typography>
 
-        <Link to="/add-student">
-          Add Student
-        </Link>
+        </Box>
 
-      </div>
+        {/* Navigation */}
+        <Box
+          sx={{
+            display: 'flex',
+            gap: 1
+          }}
+        >
 
-    </nav>
+          <Button
+            component={Link}
+            to="/"
+            startIcon={<DashboardIcon />}
+            sx={{
+              color: '#374151',
+              textTransform: 'none',
+              fontWeight: 600,
+              px: 2,
+              borderRadius: 2,
+              '&:hover': {
+                backgroundColor: '#eff6ff',
+                color: '#2563eb'
+              }
+            }}
+          >
+            Dashboard
+          </Button>
+
+          <Button
+            component={Link}
+            to="/students"
+            startIcon={<SchoolIcon />}
+            sx={{
+              color: '#374151',
+              textTransform: 'none',
+              fontWeight: 600,
+              px: 2,
+              borderRadius: 2,
+              '&:hover': {
+                backgroundColor: '#eff6ff',
+                color: '#2563eb'
+              }
+            }}
+          >
+            Students
+          </Button>
+
+
+          <Button
+            component={Link}
+            to="/add-student"
+            startIcon={<PersonAddIcon />}
+            sx={{
+              color: '#374151',
+              textTransform: 'none',
+              fontWeight: 600,
+              px: 2,
+              borderRadius: 2,
+              '&:hover': {
+                backgroundColor: '#eff6ff',
+                color: '#2563eb'
+              }
+            }}
+          >
+            Add Student
+          </Button>
+
+        </Box>
+
+      </Toolbar>
+
+    </AppBar>
   )
 }
 

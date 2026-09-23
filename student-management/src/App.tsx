@@ -13,6 +13,7 @@ import Navbar from './components/Navbar'
 import Dashboard from './pages/Dashboard'
 import Students from './pages/Students'
 import AddStudent from './pages/AddStudent'
+import StudentDetails from './pages/StudentDetails'
 
 import {
   StudentProvider,
@@ -54,6 +55,11 @@ function AppContent() {
         <Route
           path="/add-student/:id"
           element={<AddStudent />}
+        />
+
+        <Route
+          path="/students/:id"
+          element={<StudentDetails />}
         />
 
       </Routes>

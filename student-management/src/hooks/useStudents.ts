@@ -1,11 +1,5 @@
 import { useEffect, useState } from 'react'
-
-interface Student {
-  id: number
-  title: string
-  email: string
-  branch: string
-}
+import type { Student } from '../types/Student'
 
 function useStudents() {
   const [students, setStudents] = useState<Student[]>(() => {
@@ -18,15 +12,33 @@ function useStudents() {
     return [
       {
         id: 1,
-        title: 'Sakshi Deshmukh',
+        name: 'Sakshi Deshmukh',
         email: 'sakshi@gmail.com',
-        branch: 'CSE'
+        phone: '9876543210',
+        rollNumber: 'CSE2026001',
+        branch: 'CSE',
+        year: '4th Year',
+        gender: 'Female',
+        dateOfBirth: '2004-05-12',
+        city: 'Pune',
+        state: 'Maharashtra',
+        pincode: '411001'
+
       },
       {
         id: 2,
-        title: 'Rahul Patil',
+        name: 'Rahul Patil',
         email: 'rahul@gmail.com',
-        branch: 'IT'
+        phone: '9876543211',
+        rollNumber: 'IT2026001',
+        branch: 'IT',
+        year: '4th Year',
+        gender: 'Male',
+        dateOfBirth: '2004-08-20',
+        city: 'Pune',
+        state: 'Maharashtra',
+        pincode: '411002'
+
       }
     ]
   })
@@ -35,30 +47,24 @@ function useStudents() {
     localStorage.setItem('students', JSON.stringify(students))
   }, [students])
 
-  function addStudent(name: string, email: string, branch: string) {
-    const newStudent: Student = {
-      id: Date.now(),
-      title: name,
-      email: email,
-      branch: branch
+  function addStudent(student:Omit<Student,'id'>) {
+    const newStudent:Student={
+      id:Date.now(),
+      ...student
     }
 
     setStudents([...students, newStudent])
   }
 
   function editStudent(
-    id: number,
-    name: string,
-    email: string,
-    branch: string
+    id:number,
+    updatedStudent:Omit<Student,'id'>
   ) {
     const updatedStudents = students.map(student =>
       student.id === id
         ? {
-            ...student,
-            title: name,
-            email: email,
-            branch: branch
+          id:student.id,
+          ...updatedStudent
           }
         : student
     )

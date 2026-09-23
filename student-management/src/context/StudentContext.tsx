@@ -4,28 +4,20 @@ import {
 } from 'react'
 
 import type { ReactNode } from 'react'
+import type { Student } from '../types/Student'
 
 import useStudents from '../hooks/useStudents'
 
 interface StudentContextType {
-  students: {
-    id: number
-    title: string
-    email: string
-    branch: string
-  }[]
+  students: Student[]
 
   addStudent: (
-    name: string,
-    email: string,
-    branch: string
+    student:Omit<Student,'id'>
   ) => void
 
   editStudent: (
-    id: number,
-    name: string,
-    email: string,
-    branch: string
+    id:number,
+    student:Omit<Student,'id'>
   ) => void
 
   deleteStudent: (id: number) => void

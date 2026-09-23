@@ -112,6 +112,33 @@ body {
   color: #222222;
 }
 
+/*Search and Filters*/
+
+.student-filters{
+  display: flex;
+  gap: 15px;
+  margin-bottom: 20px;
+  align-items: center;
+}
+.student-filters input,
+.student-filters select{
+  padding: 10px;
+  border: 1px solid #cccccc;
+  border-radius: 6px;
+  font-size: 14px;
+}
+
+.student-filters input{
+  flex: 1;
+}
+
+.student-filters input:focus,
+.student-filters select:focus {
+  outline: none;
+  border-color: #2563eb;
+}
+
+
 /* Form */
 
 .student-form {
@@ -128,11 +155,11 @@ body {
   border: 1px solid #cccccc;
   border-radius: 8px;
   font-size: 14px;
-  color: #f3efef;
+  color: #ecdede;
 }
 
 .student-form input::placeholder {
-  color: #f3eeee;
+  color: #f3efef;
 }
 
 .student-form input:focus {
@@ -172,13 +199,23 @@ body {
 }
 
 .student-card h3 {
-  margin-bottom: 10px;
-  color: #222222;
+  font-size: 20px;
+  margin-bottom: 15px;
+  color: #111111;
 }
 
 .student-card p {
-  color: #333333;
-  margin: 6px 0;
+  color: #555555;
+  margin: 8px 0;
+  font-size: 14px;
+}
+
+.student-card{
+  transition: tarnsform 0.2s ease,box-shadow 0.2s ease;
+}
+.student-card:hover{
+  transform: translate(-4px);
+  box-shadow: 0 8px 20px rgba(0,0,0,0.12);
 }
 
 /* Student Buttons */
@@ -190,6 +227,16 @@ body {
   border-radius: 6px;
   color: white;
   cursor: pointer;
+}
+
+.student-buttons{
+  display: flex;
+  gap: 10px;
+  margin-top: 18px;
+}
+
+.student-card:hover {
+  border-color: #2563eb;
 }
 
 /* Edit Button */
@@ -232,5 +279,14 @@ body {
   .nav-links {
     gap: 15px;
   }
+  
+  .student-filters {
+  flex-direction: column;
+  align-items: stretch;
+}
+
+
+
+
 
 }
