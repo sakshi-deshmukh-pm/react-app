@@ -26,6 +26,11 @@ import CardContent from '../components/ui/CardContent'
 import Grid from '../components/ui/Grid'
 
 
+import PersonIcon from '@mui/icons-material/Person'
+import SchoolIcon from '@mui/icons-material/School'
+import LocationOnIcon from '@mui/icons-material/LocationOn'
+
+
 function AddStudent() {
 
   const navigate = useNavigate()
@@ -256,7 +261,8 @@ function AddStudent() {
       dateOfBirth,
       city,
       state,
-      pincode
+      pincode,
+      avatar: student?.avatar ?? '/avatars/student1.webp'
 
     }
 
@@ -290,68 +296,129 @@ function AddStudent() {
     <Container
       maxWidth="md"
       sx={{
-        py: 5
+        py: {
+          xs: 3,
+          md: 5
+        }
       }}
     >
+
+     
+
+ 
+
+
+      {/* Page Header */}
+
+      <Box
+        sx={{
+          mb: 3
+        }}
+      >
+
+        <Typography
+          variant="h4"
+          sx={{
+            fontWeight: 700,
+            mb: 0.5
+          }}
+        >
+          {editId
+            ? 'Edit Student'
+            : 'Add Student'
+          }
+        </Typography>
+
+        <Typography
+          variant="body1"
+          color="text.secondary"
+        >
+          {editId
+            ? 'Update the student information below.'
+            : 'Enter the student information below.'
+          }
+        </Typography>
+
+      </Box>
+
+
+      {/* Main Form Card */}
 
       <Card
         elevation={0}
         sx={{
-          border: '1px solid #e5e7eb',
-          borderRadius: 3
+          border: '1px solid #e2e8f0',
+          borderRadius: 4,
+          overflow: 'hidden'
         }}
       >
 
         <CardContent
           sx={{
             p: {
-              xs: 3,
-              md: 5
+              xs: 2.5,
+              sm: 3.5,
+              md: 4
             }
           }}
         >
-
-          {/* Heading */}
-
-          <Box
-            sx={{
-              mb: 4
-            }}
-          >
-
-            <Typography
-              variant="h4"
-              sx={{
-                fontWeight: 700,
-                mb: 1
-              }}
-            >
-              {editId
-                ? 'Edit Student'
-                : 'Add Student'
-              }
-            </Typography>
-
-
-            <Typography
-              variant="body1"
-              color="text.secondary"
-            >
-              {editId
-                ? 'Update the student information below.'
-                : 'Enter the student information below.'
-              }
-            </Typography>
-
-          </Box>
-
-
-          {/* Form */}
 
           <Box
             component="form"
             onSubmit={handleSubmit}
           >
+
+
+            {/* BASIC INFORMATION */}
+
+            <Box
+              sx={{
+                display: 'flex',
+                alignItems: 'center',
+                gap: 1.5,
+                mb: 3,
+                pb: 2,
+                borderBottom: '1px solid #e2e8f0'
+              }}
+            >
+
+              <Box
+                sx={{
+                  width: 42,
+                  height: 42,
+                  borderRadius: 2,
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  backgroundColor: '#e8f0fe',
+                  color: 'primary.main'
+                }}
+              >
+                <PersonIcon />
+              </Box>
+
+              <Box>
+
+                <Typography
+                  variant="h6"
+                  sx={{
+                    fontWeight: 700
+                  }}
+                >
+                  Basic Information
+                </Typography>
+
+                <Typography
+                  variant="body2"
+                  color="text.secondary"
+                >
+                  Enter the student's basic details
+                </Typography>
+
+              </Box>
+
+            </Box>
+
 
             <Grid
               container
@@ -442,6 +509,65 @@ function AddStudent() {
 
               </Grid>
 
+            </Grid>
+
+
+            {/* ACADEMIC INFORMATION */}
+
+            <Box
+              sx={{
+                display: 'flex',
+                alignItems: 'center',
+                gap: 1.5,
+                mt: 5,
+                mb: 3,
+                pb: 2,
+                borderBottom: '1px solid #e2e8f0'
+              }}
+            >
+
+              <Box
+                sx={{
+                  width: 42,
+                  height: 42,
+                  borderRadius: 2,
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  backgroundColor: '#edf7ed',
+                  color: 'success.main'
+                }}
+              >
+                <SchoolIcon />
+              </Box>
+
+              <Box>
+
+                <Typography
+                  variant="h6"
+                  sx={{
+                    fontWeight: 700
+                  }}
+                >
+                  Academic Information
+                </Typography>
+
+                <Typography
+                  variant="body2"
+                  color="text.secondary"
+                >
+                  Enter academic details
+                </Typography>
+
+              </Box>
+
+            </Box>
+
+
+            <Grid
+              container
+              spacing={2.5}
+            >
 
               {/* Branch */}
 
@@ -592,6 +718,65 @@ function AddStudent() {
 
               </Grid>
 
+            </Grid>
+
+
+            {/* PERSONAL INFORMATION */}
+
+            <Box
+              sx={{
+                display: 'flex',
+                alignItems: 'center',
+                gap: 1.5,
+                mt: 5,
+                mb: 3,
+                pb: 2,
+                borderBottom: '1px solid #e2e8f0'
+              }}
+            >
+
+              <Box
+                sx={{
+                  width: 42,
+                  height: 42,
+                  borderRadius: 2,
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  backgroundColor: '#fff4e5',
+                  color: 'warning.main'
+                }}
+              >
+                <LocationOnIcon />
+              </Box>
+
+              <Box>
+
+                <Typography
+                  variant="h6"
+                  sx={{
+                    fontWeight: 700
+                  }}
+                >
+                  Personal Information
+                </Typography>
+
+                <Typography
+                  variant="body2"
+                  color="text.secondary"
+                >
+                  Enter personal and location details
+                </Typography>
+
+              </Box>
+
+            </Box>
+
+
+            <Grid
+              container
+              spacing={2.5}
+            >
 
               {/* Date of Birth */}
 
@@ -682,45 +867,54 @@ function AddStudent() {
 
               </Grid>
 
+            </Grid>
 
-              {/* Submit Button */}
 
-              <Grid
-                size={{
-                  xs: 12
+            {/* ACTIONS */}
+
+            <Box
+              sx={{
+                display: 'flex',
+                justifyContent: 'flex-end',
+                gap: 2,
+                mt: 5,
+                pt: 3,
+                borderTop: '1px solid #e2e8f0'
+              }}
+            >
+
+              <Button
+                type="button"
+                variant="outlined"
+                onClick={() => navigate('/students')}
+                sx={{
+                  textTransform: 'none',
+                  px: 3,
+                  borderRadius: 2
                 }}
               >
+                Cancel
+              </Button>
 
-                <Box
-                  sx={{
-                    display: 'flex',
-                    justifyContent: 'flex-end',
-                    mt: 2
-                  }}
-                >
 
-                  <Button
-                    type="submit"
-                    variant="contained"
-                    sx={{
-                      textTransform: 'none',
-                      px: 4,
-                      py: 1.2,
-                      borderRadius: 2,
-                      fontWeight: 600
-                    }}
-                  >
-                    {editId
-                      ? 'Update Student'
-                      : 'Add Student'
-                    }
-                  </Button>
+              <Button
+                type="submit"
+                variant="contained"
+                sx={{
+                  textTransform: 'none',
+                  px: 4,
+                  py: 1.2,
+                  borderRadius: 2,
+                  fontWeight: 600
+                }}
+              >
+                {editId
+                  ? 'Update Student'
+                  : 'Add Student'
+                }
+              </Button>
 
-                </Box>
-
-              </Grid>
-
-            </Grid>
+            </Box>
 
           </Box>
 

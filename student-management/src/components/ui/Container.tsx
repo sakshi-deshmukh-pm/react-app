@@ -3,7 +3,14 @@ import type { ContainerProps } from "@mui/material/Container"
 
 const Container = (props: ContainerProps) => {
   return (
-    <MuiContainer {...props} />
+    <MuiContainer
+      {...props}
+      maxWidth={false}
+      sx={{
+        width: "100%",
+        ...props.sx
+      }}
+    />
   )
 }
 

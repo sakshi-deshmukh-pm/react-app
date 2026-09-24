@@ -4,6 +4,12 @@
   padding: 0;
 }
 
+html,
+body {
+  width: 100%;
+  min-height: 100%;
+}
+
 body {
   font-family: Arial, sans-serif;
   background: #f4f6f9;
@@ -11,16 +17,20 @@ body {
 }
 
 #root {
+  width: 100%;
   min-height: 100vh;
 }
 
 .app {
+  width: 100%;
   min-height: 100vh;
 }
 
-/* Navbar */
+
+/* ================= NAVBAR ================= */
 
 .navbar {
+  width: 100%;
   background: #1f2937;
   color: white;
   padding: 18px 40px;
@@ -47,11 +57,11 @@ body {
   text-decoration: underline;
 }
 
-/* Dashboard */
+
+/* ================= OLD DASHBOARD ================= */
 
 .dashboard {
-  max-width: 1200px;
-  margin: 0 auto;
+  width: 100%;
   padding: 40px 25px;
 }
 
@@ -70,7 +80,8 @@ body {
   color: #333333;
 }
 
-/* Stats */
+
+/* ================= OLD STATS ================= */
 
 .stats {
   display: grid;
@@ -97,9 +108,11 @@ body {
   color: #111111;
 }
 
-/* Sections */
+
+/* ================= SECTIONS ================= */
 
 .student-section {
+  width: 100%;
   background: white;
   padding: 25px;
   border-radius: 12px;
@@ -112,23 +125,25 @@ body {
   color: #222222;
 }
 
-/*Search and Filters*/
 
-.student-filters{
+/* ================= SEARCH & FILTERS ================= */
+
+.student-filters {
   display: flex;
   gap: 15px;
   margin-bottom: 20px;
   align-items: center;
 }
+
 .student-filters input,
-.student-filters select{
+.student-filters select {
   padding: 10px;
   border: 1px solid #cccccc;
   border-radius: 6px;
   font-size: 14px;
 }
 
-.student-filters input{
+.student-filters input {
   flex: 1;
 }
 
@@ -139,7 +154,7 @@ body {
 }
 
 
-/* Form */
+/* ================= FORM ================= */
 
 .student-form {
   display: flex;
@@ -155,47 +170,48 @@ body {
   border: 1px solid #cccccc;
   border-radius: 8px;
   font-size: 14px;
-  color: #ecdede;
+  color: #222222;
 }
 
 .student-form input::placeholder {
-  color: #f3efef;
+  color: #888888;
 }
 
 .student-form input:focus {
   outline: none;
   border-color: #2563eb;
 }
-/* 
-.student-form button {
-  padding: 12px 20px;
-  border: none;
-  border-radius: 8px;
-  background: #2563eb;
-  color: white;
-  cursor: pointer;
-  font-size: 14px;
-} */
 
 .student-form button:hover {
   opacity: 0.9;
 }
 
-/* Student List */
+
+/* ================= STUDENT LIST ================= */
 
 .student-list {
+  width: 100%;
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 18px;
 }
 
-/* Student Card */
+
+/* ================= STUDENT CARD ================= */
 
 .student-card {
   border: 1px solid #e5e5e5;
   padding: 20px;
   border-radius: 10px;
   background: #fafafa;
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.student-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
 }
 
 .student-card h3 {
@@ -210,15 +226,8 @@ body {
   font-size: 14px;
 }
 
-.student-card{
-  transition: tarnsform 0.2s ease,box-shadow 0.2s ease;
-}
-.student-card:hover{
-  transform: translate(-4px);
-  box-shadow: 0 8px 20px rgba(0,0,0,0.12);
-}
 
-/* Student Buttons */
+/* ================= STUDENT BUTTONS ================= */
 
 .student-card button {
   margin-top: 15px;
@@ -229,34 +238,33 @@ body {
   cursor: pointer;
 }
 
-.student-buttons{
+.student-buttons {
   display: flex;
   gap: 10px;
   margin-top: 18px;
-}
-
-.student-card:hover {
-  border-color: #2563eb;
-}
-
-/* Edit Button */
-
-.student-card .edit-button {
-  background: #2563eb;
-  margin-right: 10px;
-}
-
-/* Delete Button */
-
-.student-card .delete-button {
-  background: #dc2626;
 }
 
 .student-card button:hover {
   opacity: 0.85;
 }
 
-/* Responsive */
+
+/* ================= EDIT BUTTON ================= */
+
+.student-card .edit-button {
+  background: #2563eb;
+  margin-right: 10px;
+}
+
+
+/* ================= DELETE BUTTON ================= */
+
+.student-card .delete-button {
+  background: #dc2626;
+}
+
+
+/* ================= RESPONSIVE ================= */
 
 @media (max-width: 768px) {
 
@@ -279,14 +287,34 @@ body {
   .nav-links {
     gap: 15px;
   }
-  
+
   .student-filters {
-  flex-direction: column;
-  align-items: stretch;
-}
-
-
-
-
+    flex-direction: column;
+    align-items: stretch;
+  }
 
 }
+
+
+/* ================= SMALL SCREENS ================= */
+
+@media (max-width: 480px) {
+
+  .navbar {
+    padding: 14px 16px;
+  }
+
+  .nav-links {
+    gap: 10px;
+  }
+
+  .dashboard {
+    padding: 25px 16px;
+  }
+
+  .student-section {
+    padding: 18px;
+  }
+
+}
+

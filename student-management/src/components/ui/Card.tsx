@@ -1,9 +1,17 @@
-import MuiCard from "@mui/material/Card"
-import type { CardProps } from "@mui/material/Card"
+import MuiCard from '@mui/material/Card'
 
-const Card = (props: CardProps) => {
+const Card = (props: any) => {
   return (
-    <MuiCard {...props} />
+    <MuiCard
+      {...props}
+      elevation={0}
+      sx={{
+        borderRadius: 3,
+        backgroundColor: '#ffffff',
+        boxShadow: '0 4px 20px rgba(0, 0, 0, 0.05)',
+        ...props.sx
+      }}
+    />
   )
 }
 

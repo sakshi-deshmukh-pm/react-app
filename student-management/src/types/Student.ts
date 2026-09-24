@@ -11,4 +11,5 @@ export interface Student {
   city:string
   state:string
   pincode:string
+  avatar:string
 }

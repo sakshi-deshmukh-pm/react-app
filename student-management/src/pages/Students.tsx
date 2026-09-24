@@ -1,9 +1,7 @@
+import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { useEffect, useState } from 'react'
 
 import StudentCard from '../components/StudentCard'
-import { getStudents } from '../services/studentService'
-import type { Student } from '../types/Student'
 
 import {
   useStudentContext
@@ -16,53 +14,27 @@ import InputLabel from '../components/ui/InputLabel'
 import Select from '@mui/material/Select'
 import MenuItem from '../components/ui/MenuItem'
 import Box from '../components/ui/Box'
-
+import Typography from '../components/ui/Typography'
 
 
 function Students() {
-
-  const [apiStudents, setApiStudents] = useState<Student[]>([])
-  const [loading, setLoading] = useState(true)
-  const [error, setError] = useState("")
-  const [search, setSearch] = useState('')
-  const [branchFilter, setBranchFilter] = useState('')
-
-
-  async function loadStudents() {
-
-    try {
-
-      const data = await getStudents()
-
-      setApiStudents(data)
-
-      setLoading(false)
-
-    } catch (error) {
-
-      setError("Failed to load students")
-
-      setLoading(false)
-
-    }
-
-  }
-
-
-  useEffect(() => {
-
-    loadStudents()
-
-  }, [])
-
 
   const navigate = useNavigate()
 
   const {
     students,
+    loading,
+    error,
     deleteStudent
   } = useStudentContext()
 
+
+  const [search, setSearch] = useState('')
+
+  const [branchFilter, setBranchFilter] = useState('')
+
+
+  // Search + Branch Filter
 
   const filteredStudents = students.filter(student =>
     student.name
@@ -75,206 +47,338 @@ function Students() {
   )
 
 
+  // Separate students for visual display
+
+  const regularStudents = filteredStudents.filter(
+    student => student.id < 1000
+  )
+
+  const apiStudents = filteredStudents.filter(
+    student => student.id >= 1000
+  )
+
+
   return (
 
     <Container
       maxWidth="lg"
-      sx={{ py: 5 }}
+      sx={{
+        py: 5
+      }}
     >
 
-      {/* Existing Students */}
+      {/* Page Heading */}
 
-      <section className="student-section">
+      <Typography
+        variant="h4"
+        sx={{
+          fontWeight: 700,
+          mb: 4
+        }}
+      >
+        Students
+      </Typography>
 
-        <h2>Students</h2>
 
+      {/* Search + Branch Filter */}
 
-        {/* Search and Branch Filter */}
+      <Box
+        sx={{
+          display: 'flex',
+          gap: 2,
+          mb: 5,
+          flexWrap: 'wrap'
+        }}
+      >
 
-        <Box
+        <TextField
+          label="Search Student"
+          placeholder="Enter student name"
+          value={search}
+          onChange={e =>
+            setSearch(e.target.value)
+          }
+          size="small"
           sx={{
-            display: 'flex',
-            gap: 2,
-            mb: 3,
-            flexWrap: 'wrap'
+            flex: 1,
+            minWidth: 220
+          }}
+        />
+
+
+        <FormControl
+          size="small"
+          sx={{
+            minWidth: 180
           }}
         >
 
-          <TextField
-            label="Search Student"
-            placeholder="Enter student name"
-            value={search}
-            onChange={e => setSearch(e.target.value)}
-            size="small"
-            sx={{
-              flex: 1,
-              minWidth: 220
-            }}
-          />
+          <InputLabel>
+            Branch
+          </InputLabel>
 
-
-          <FormControl
-            size="small"
-            sx={{
-              minWidth: 180
-            }}
+          <Select
+            value={branchFilter}
+            label="Branch"
+            onChange={e =>
+              setBranchFilter(e.target.value)
+            }
           >
 
-            <InputLabel>
-              Branch
-            </InputLabel>
+            <MenuItem value="">
+              All Branches
+            </MenuItem>
+
+            <MenuItem value="CSE">
+              CSE
+            </MenuItem>
+
+            <MenuItem value="IT">
+              IT
+            </MenuItem>
+
+            <MenuItem value="ECE">
+              ECE
+            </MenuItem>
+
+            <MenuItem value="Mechanical">
+              Mechanical
+            </MenuItem>
+
+            <MenuItem value="Civil">
+              Civil
+            </MenuItem>
+
+          </Select>
+
+        </FormControl>
+
+      </Box>
 
 
-            <Select
-              value={branchFilter}
-              label="Branch"
-              onChange={e =>
-                setBranchFilter(e.target.value)
-              }
-            >
+      {/* Loading */}
 
-              <MenuItem value="">
-                All Branches
-              </MenuItem>
+      {loading && (
+        <Typography
+          color="text.secondary"
+          sx={{
+            mb: 3
+          }}
+        >
+          Loading students...
+        </Typography>
+      )}
 
-              <MenuItem value="CSE">
-                CSE
-              </MenuItem>
 
-              <MenuItem value="IT">
-                IT
-              </MenuItem>
+      {/* Error */}
 
-              <MenuItem value="ECE">
-                ECE
-              </MenuItem>
+      {error && (
+        <Typography
+          color="error"
+          sx={{
+            mb: 3
+          }}
+        >
+          {error}
+        </Typography>
+      )}
 
-              <MenuItem value="Mechanical">
-                Mechanical
-              </MenuItem>
 
-              <MenuItem value="Civil">
-                Civil
-              </MenuItem>
+      {/* ========================= */}
+      {/* Regular Students */}
+      {/* ========================= */}
 
-            </Select>
+      <Box
+        sx={{
+          display: 'flex',
+          alignItems: 'center',
+          gap: 2,
+          mb: 3
+        }}
+      >
 
-          </FormControl>
+        {/* Accent Line */}
 
+        <Box
+          sx={{
+            width: 6,
+            height: 32,
+            borderRadius: 2,
+            bgcolor: 'primary.main'
+          }}
+        />
+
+
+        <Typography
+          variant="h5"
+          sx={{
+            fontWeight: 700
+          }}
+        >
+          Regular Students
+        </Typography>
+
+
+        {/* Student Count */}
+
+        <Box
+          sx={{
+            px: 1.5,
+            py: 0.5,
+            borderRadius: 5,
+            bgcolor: '#e8f0fe',
+            color: 'primary.main',
+            fontWeight: 600,
+            fontSize: 14
+          }}
+        >
+          {regularStudents.length}
         </Box>
 
-
-        {/* Student Cards */}
-
-        <div className="student-list">
-
-          {filteredStudents.map(student => (
-
-            <StudentCard
-
-              key={student.id}
-
-              name={student.name}
-
-              email={student.email}
-
-              phone={student.phone}
-
-              rollNumber={student.rollNumber}
-
-              branch={student.branch}
-
-              year={student.year}
-
-              gender={student.gender}
-
-              city={student.city}
-
-              state={student.state}
-
-              onEdit={() =>
-                navigate(
-                  `/add-student/${student.id}`
-                )
-              }
-
-              onDelete={() =>
-                deleteStudent(student.id)
-              }
-
-              onView={()=>{
-                navigate(`/students/${student.id}`)
-              }}
-
-            />
-
-          ))}
-
-        </div>
-
-      </section>
+      </Box>
 
 
+      {/* Regular Student Cards */}
+
+      <div className="student-list">
+
+        {regularStudents.map(student => (
+
+          <StudentCard
+            key={student.id}
+
+            name={student.name}
+            email={student.email}
+            phone={student.phone}
+            rollNumber={student.rollNumber}
+            branch={student.branch}
+            year={student.year}
+            gender={student.gender}
+            city={student.city}
+            state={student.state}
+            avatar={student.avatar}
+
+            onEdit={() =>
+              navigate(
+                `/add-student/${student.id}`
+              )
+            }
+
+            onDelete={() =>
+              deleteStudent(student.id)
+            }
+
+            onView={() =>
+              navigate(
+                `/students/${student.id}`
+              )
+            }
+          />
+
+        ))}
+
+      </div>
+
+
+      {/* ========================= */}
       {/* API Students */}
+      {/* ========================= */}
 
-      <section className="student-section">
+      <Box
+        sx={{
+          display: 'flex',
+          alignItems: 'center',
+          gap: 2,
+          mb: 3,
+          mt: 7
+        }}
+      >
 
-        <h2>API Students</h2>
+        {/* Accent Line */}
+
+        <Box
+          sx={{
+            width: 6,
+            height: 32,
+            borderRadius: 2,
+            bgcolor: 'secondary.main'
+          }}
+        />
 
 
-        {loading && (
-          <p>Loading students...</p>
-        )}
+        <Typography
+          variant="h5"
+          sx={{
+            fontWeight: 700
+          }}
+        >
+          API Students
+        </Typography>
 
 
-        {error && (
-          <p>{error}</p>
-        )}
+        {/* Student Count */}
+
+        <Box
+          sx={{
+            px: 1.5,
+            py: 0.5,
+            borderRadius: 5,
+            bgcolor: '#f3e8ff',
+            color: 'secondary.main',
+            fontWeight: 600,
+            fontSize: 14
+          }}
+        >
+          {apiStudents.length}
+        </Box>
+
+      </Box>
 
 
-        <div className="student-list">
+      {/* API Student Cards */}
 
-          {apiStudents.map(student => (
+      <div className="student-list">
 
-            <StudentCard
+        {apiStudents.map(student => (
 
-              key={student.id}
+          <StudentCard
+            key={student.id}
 
-              name={student.name}
+            name={student.name}
+            email={student.email}
+            phone={student.phone}
+            rollNumber={student.rollNumber}
+            branch={student.branch}
+            year={student.year}
+            gender={student.gender}
+            city={student.city}
+            state={student.state}
+            avatar={student.avatar}
 
-              email={student.email}
+            onEdit={() =>
+              navigate(
+                `/add-student/${student.id}`
+              )
+            }
 
-              phone={student.phone}
+            onDelete={() =>
+              deleteStudent(student.id)
+            }
 
-              rollNumber={student.rollNumber}
+            onView={() =>
+              navigate(
+                `/students/${student.id}`
+              )
+            }
+          />
 
-              branch={student.branch}
+        ))}
 
-              year={student.year}
-
-              gender={student.gender}
-
-              city={student.city}
-
-              state={student.state}
-
-              onEdit={() => { }}
-
-              onDelete={() => { }}
-
-              onView={()=>{}}
-
-            />
-
-          ))}
-
-        </div>
-
-      </section>
+      </div>
 
     </Container>
-
   )
 }
+
 
 export default Students

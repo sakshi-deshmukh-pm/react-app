@@ -1,12 +1,26 @@
 import { useEffect, useState } from 'react'
 import type { Student } from '../types/Student'
+import { getStudents } from '../services/studentService'
+
+const defaultAvatar = '/avatars/student1.webp'
 
 function useStudents() {
+
   const [students, setStudents] = useState<Student[]>(() => {
+
     const savedStudents = localStorage.getItem('students')
 
     if (savedStudents) {
-      return JSON.parse(savedStudents)
+
+      const saved: Student[] = JSON.parse(savedStudents)
+
+      if (saved.length > 0) {
+
+        return saved.map(student => ({
+          ...student,
+          avatar: student.avatar || defaultAvatar
+        }))
+      }
     }
 
     return [
@@ -22,9 +36,10 @@ function useStudents() {
         dateOfBirth: '2004-05-12',
         city: 'Pune',
         state: 'Maharashtra',
-        pincode: '411001'
-
+        pincode: '411001',
+        avatar: defaultAvatar
       },
+
       {
         id: 2,
         name: 'Rahul Patil',
@@ -37,51 +52,114 @@ function useStudents() {
         dateOfBirth: '2004-08-20',
         city: 'Pune',
         state: 'Maharashtra',
-        pincode: '411002'
-
+        pincode: '411002',
+        avatar: defaultAvatar
       }
     ]
   })
 
-  useEffect(() => {
-    localStorage.setItem('students', JSON.stringify(students))
-  }, [students])
+  const [loading, setLoading] = useState(true)
+  const [error, setError] = useState('')
 
-  function addStudent(student:Omit<Student,'id'>) {
-    const newStudent:Student={
-      id:Date.now(),
-      ...student
+  useEffect(() => {
+
+    async function loadApiStudents() {
+
+      try {
+
+        const apiStudents = await getStudents()
+
+        const updatedApiStudents = apiStudents.map(student => ({
+          ...student,
+          id: 1000 + student.id,
+          avatar: student.avatar || defaultAvatar
+        }))
+
+        setStudents(currentStudents => {
+
+          const localStudents = currentStudents.filter(
+            student => student.id < 1000
+          )
+
+          return [
+            ...localStudents,
+            ...updatedApiStudents
+          ]
+        })
+
+        setLoading(false)
+
+      } catch (error) {
+
+        setError('Failed to load API students')
+        setLoading(false)
+
+      }
     }
 
-    setStudents([...students, newStudent])
+    loadApiStudents()
+
+  }, [])
+
+  useEffect(() => {
+
+    localStorage.setItem(
+      'students',
+      JSON.stringify(students)
+    )
+
+  }, [students])
+
+  function addStudent(
+    student: Omit<Student, 'id'>
+  ) {
+
+    const newStudent: Student = {
+      id: Date.now(),
+      ...student,
+      avatar: student.avatar || defaultAvatar
+    }
+
+    setStudents(currentStudents => [
+      ...currentStudents,
+      newStudent
+    ])
   }
 
   function editStudent(
-    id:number,
-    updatedStudent:Omit<Student,'id'>
+    id: number,
+    updatedStudent: Omit<Student, 'id'>
   ) {
-    const updatedStudents = students.map(student =>
-      student.id === id
-        ? {
-          id:student.id,
-          ...updatedStudent
-          }
-        : student
-    )
 
-    setStudents(updatedStudents)
+    setStudents(currentStudents =>
+      currentStudents.map(student =>
+        student.id === id
+          ? {
+              id: student.id,
+              ...updatedStudent,
+              avatar:
+                updatedStudent.avatar ||
+                student.avatar ||
+                defaultAvatar
+            }
+          : student
+      )
+    )
   }
 
   function deleteStudent(id: number) {
-    const updatedStudents = students.filter(
-      student => student.id !== id
-    )
 
-    setStudents(updatedStudents)
+    setStudents(currentStudents =>
+      currentStudents.filter(
+        student => student.id !== id
+      )
+    )
   }
 
   return {
     students,
+    loading,
+    error,
     addStudent,
     editStudent,
     deleteStudent

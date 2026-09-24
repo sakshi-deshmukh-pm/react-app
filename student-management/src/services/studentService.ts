@@ -25,7 +25,8 @@ export async function getStudents(): Promise<Student[]> {
     city: user.address.city,
     state: "Maharashtra",
     pincode: "000000",
-    passPort : studentImg1
+    passPort : studentImg1,
+    avatar:"/avatars/student1.webp"
 
 
   }));

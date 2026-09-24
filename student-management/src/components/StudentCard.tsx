@@ -1,6 +1,6 @@
 import Button from "../components/ui/Button"
-import CardContent from '../components/ui/CardContent'
-import Card from '../components/ui/Card'
+import CardContent from "../components/ui/CardContent"
+import Card from "../components/ui/Card"
 import Typography from "../components/ui/Typography"
 import Box from "../components/ui/Box"
 import Divider from "../components/ui/Divider"
@@ -11,6 +11,7 @@ import PhoneIcon from "@mui/icons-material/Phone"
 import SchoolIcon from "@mui/icons-material/School"
 import CalendarMonthIcon from "@mui/icons-material/CalendarMonth"
 import LocationOnIcon from "@mui/icons-material/LocationOn"
+import Avatar from "@mui/material/Avatar"
 
 interface StudentCardProp {
   name: string
@@ -22,10 +23,11 @@ interface StudentCardProp {
   gender: string
   city: string
   state: string
+  avatar: string
   onEdit: () => void
   onDelete: () => void
   onView: () => void
-  profile?:()=>void
+  profile?: () => void
 }
 
 function StudentCard({
@@ -38,17 +40,21 @@ function StudentCard({
   gender,
   city,
   state,
-  
-  
+  avatar,
   onEdit,
   onDelete,
   onView
 }: StudentCardProp) {
+
+  const studentAvatar =
+    avatar && avatar.startsWith('/avatars/')
+      ? avatar
+      : '/avatars/student1.webp'
+
   return (
     <Card
       elevation={0}
       sx={{
-        border: '1px solid #e5e7eb',
         borderRadius: 3,
         height: '100%',
         transition: '0.3s',
@@ -68,20 +74,14 @@ function StudentCard({
             mb: 2
           }}
         >
-          <Box
+          <Avatar
+            src={studentAvatar}
+            alt={name}
             sx={{
               width: 45,
-              height: 45,
-              borderRadius: '50%',
-              backgroundColor: '#eff6ff',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center'
+              height: 45
             }}
-          >
-            <PersonIcon sx={{ color: '#2563eb' }} />
-            {/* <Image src={profile}/> */}
-          </Box>
+          />
 
           <Typography
             variant="h6"
@@ -93,7 +93,14 @@ function StudentCard({
 
         <Divider sx={{ mb: 2 }} />
 
-        <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, mb: 1.5 }}>
+        <Box
+          sx={{
+            display: 'flex',
+            alignItems: 'center',
+            gap: 1,
+            mb: 1.5
+          }}
+        >
           <EmailIcon
             fontSize="small"
             sx={{ color: '#6b7280' }}
@@ -107,7 +114,14 @@ function StudentCard({
           </Typography>
         </Box>
 
-        <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, mb: 1.5 }}>
+        <Box
+          sx={{
+            display: 'flex',
+            alignItems: 'center',
+            gap: 1,
+            mb: 1.5
+          }}
+        >
           <PhoneIcon
             fontSize="small"
             sx={{ color: '#6b7280' }}
@@ -121,7 +135,14 @@ function StudentCard({
           </Typography>
         </Box>
 
-        <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, mb: 1.5 }}>
+        <Box
+          sx={{
+            display: 'flex',
+            alignItems: 'center',
+            gap: 1,
+            mb: 1.5
+          }}
+        >
           <SchoolIcon
             fontSize="small"
             sx={{ color: '#6b7280' }}
@@ -135,7 +156,14 @@ function StudentCard({
           </Typography>
         </Box>
 
-        <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, mb: 1.5 }}>
+        <Box
+          sx={{
+            display: 'flex',
+            alignItems: 'center',
+            gap: 1,
+            mb: 1.5
+          }}
+        >
           <SchoolIcon
             fontSize="small"
             sx={{ color: '#6b7280' }}
@@ -149,7 +177,14 @@ function StudentCard({
           </Typography>
         </Box>
 
-        <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, mb: 1.5 }}>
+        <Box
+          sx={{
+            display: 'flex',
+            alignItems: 'center',
+            gap: 1,
+            mb: 1.5
+          }}
+        >
           <CalendarMonthIcon
             fontSize="small"
             sx={{ color: '#6b7280' }}
@@ -163,7 +198,14 @@ function StudentCard({
           </Typography>
         </Box>
 
-        <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, mb: 1.5 }}>
+        <Box
+          sx={{
+            display: 'flex',
+            alignItems: 'center',
+            gap: 1,
+            mb: 1.5
+          }}
+        >
           <PersonIcon
             fontSize="small"
             sx={{ color: '#6b7280' }}
@@ -177,7 +219,14 @@ function StudentCard({
           </Typography>
         </Box>
 
-        <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, mb: 2 }}>
+        <Box
+          sx={{
+            display: 'flex',
+            alignItems: 'center',
+            gap: 1,
+            mb: 2
+          }}
+        >
           <LocationOnIcon
             fontSize="small"
             sx={{ color: '#6b7280' }}
@@ -193,7 +242,6 @@ function StudentCard({
 
         <Divider sx={{ mb: 2 }} />
 
-        {/* View Details Button */}
         <Box
           sx={{
             display: 'flex',
@@ -213,7 +261,6 @@ function StudentCard({
             View Details
           </Button>
 
-          {/* Edit and Delete */}
           <Box
             sx={{
               display: 'flex',
@@ -256,3 +303,5 @@ function StudentCard({
 }
 
 export default StudentCard
+
+
